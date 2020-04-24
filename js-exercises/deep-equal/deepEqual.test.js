@@ -22,6 +22,15 @@ describe("Template Test", () => {
   });
 
   test("Shoud return correct answer in case of different descriptor", () => {
+    const obj = {};
+    const obj2 = {};
+    Object.defineProperty(obj2, "a", { value: 5 });
+    Object.defineProperty(obj, "a", { value: 5 });
+    expect(deepEqual(obj, obj2, { matchDescriptors: false })).toBe(true);
+    expect(deepEqual(obj, obj2, { matchDescriptors: true })).toBe(true);
+  });
+
+  test("Shoud return correct answer in case of different descriptor", () => {
     const obj = { a: 5 };
     const obj2 = {};
     Object.defineProperty(obj2, "a", { value: 5 });
