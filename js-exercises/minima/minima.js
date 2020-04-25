@@ -16,7 +16,7 @@ function minima(numerOfElements, array) {
   }
 
   const inputArray = array.filter(isNumber);
-  inputArray.sort((firstNum, secondNum) => firstNum - secondNum);
+  inputArray.sort((num1, num2) => num1 - num2);
 
   const lengthOfInputArray = inputArray.length;
   if (lengthOfInputArray <= numberOfElementsToReturn) {
