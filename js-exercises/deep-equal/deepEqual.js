@@ -1,10 +1,10 @@
-function deepEqual(object1, object2, compareDescriptor) {
-  if (!isObject(object1)) {
-    throw new TypeError(`expected object, got ${typeof object1}`);
+function deepEqual(firstObj, secondObj, compareDescriptor) {
+  if (!isObject(firstObj)) {
+    throw new TypeError(`expected object, got ${typeof firstObj}`);
   }
 
-  if (!isObject(object2)) {
-    throw new TypeError(`expected object, got ${typeof object2}`);
+  if (!isObject(secondObj)) {
+    throw new TypeError(`expected object, got ${typeof secondObj}`);
   }
 
   if (!isObject(compareDescriptor)) {
@@ -13,26 +13,26 @@ function deepEqual(object1, object2, compareDescriptor) {
 
   const shouldCompareDescriptor = compareDescriptor.matchDescriptors;
 
-  return isObjectEqual(object1, object2, shouldCompareDescriptor);
+  return isObjectEqual(firstObj, secondObj, shouldCompareDescriptor);
 
 }
 
-const isObjectEqual = (obj1, obj2, shouldCompareDescriptor) => {
+const isObjectEqual = (firstObj, secondObj, shouldCompareDescriptor) => {
 
   // check if objects have identical keys
-  const objectHasSameKeys = compareObjectKeys(obj1, obj2);
+  const objectHasSameKeys = compareObjectKeys(firstObj, secondObj);
   if (!objectHasSameKeys) {
     return false;
   }
-  const propertiesOfObj1 = Object.getOwnPropertyNames(obj1);
+  const propertiesOfFirstObj = Object.getOwnPropertyNames(firstObj);
 
-  for (const property of propertiesOfObj1) {
+  for (const property of propertiesOfFirstObj) {
     // if should compareDescrptor is true, compare the descriptor
     // if objects have different descriptor return false
     if (shouldCompareDescriptor) {
-      const descriptor1 = Object.getOwnPropertyDescriptor(obj1, property);
-      const descriptor2 = Object.getOwnPropertyDescriptor(obj2, property);
-      const hasSameDescriptor = compareDescriptor(descriptor1, descriptor2);
+      const descriptorOfFirstObj = Object.getOwnPropertyDescriptor(firstObj, property);
+      const descriptorOfSecondObj = Object.getOwnPropertyDescriptor(secondObj, property);
+      const hasSameDescriptor = compareDescriptor(descriptorOfFirstObj, descriptorOfSecondObj);
       if (!hasSameDescriptor) {
         return false;
       }
@@ -41,15 +41,15 @@ const isObjectEqual = (obj1, obj2, shouldCompareDescriptor) => {
     // compare values 
     // if value is not object then compare directly , otherwise recursively call 
     // isOjectEqual function
-    const val1 = obj1[property];
-    const val2 = obj2[property];
-    const isValObject = isObject(val1);
+    const firstVal = firstObj[property];
+    const secondVal = secondObj[property];
+    const isValObject = isObject(firstObj);
     if (!isValObject) {
-      if (val1 !== val2) {
+      if (firstVal !== secondVal) {
         return false;
       }
     } else {
-      if (!isObjectEqual(val1, val2, shouldCompareDescriptor)) {
+      if (!isObjectEqual(firstVal, secondVal, shouldCompareDescriptor)) {
         return false;
       }
     }
@@ -60,11 +60,11 @@ const isObjectEqual = (obj1, obj2, shouldCompareDescriptor) => {
    * then both the object is identical so return true
    */
   return true;
-}
+};
 
-const compareObjectKeys = (obj1, obj2) => {
-  const propertiesOfObj1 = Object.getOwnPropertyNames(obj1);
-  const propertiesOfObj2 = Object.getOwnPropertyNames(obj2);
+const compareObjectKeys = (firstObj, secondObj) => {
+  const propertiesOfObj1 = Object.getOwnPropertyNames(firstObj);
+  const propertiesOfObj2 = Object.getOwnPropertyNames(secondObj);
   const len1 = propertiesOfObj1.length;
   const len2 = propertiesOfObj2.length;
   if (len1 !== len2) {
@@ -77,23 +77,23 @@ const compareObjectKeys = (obj1, obj2) => {
     }
   }
   return true;
-}
+};
 
-const compareDescriptor = (descriptor1, descriptor2) => {
-  const keys = Object.getOwnPropertyNames(descriptor1);
+const compareDescriptor = (firstDescriptor, secondDescriptor) => {
+  const keys = Object.getOwnPropertyNames(firstDescriptor);
   for (const key of keys) {
     if (key !== 'value') {
-      const val1 = descriptor1[key];
-      const val2 = descriptor2[key];
+      const val1 = firstDescriptor[key];
+      const val2 = secondDescriptor[key];
       if (val1 !== val2) {
         return false;
       }
     }
   }
   return true;
-}
+};
 
-const isObject = (obj) => typeof obj === 'object';
+const isObject = (obj) => typeof obj === 'object' && typeof obj !== null;
 
 
 export {
