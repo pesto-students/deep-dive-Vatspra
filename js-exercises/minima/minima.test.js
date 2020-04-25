@@ -14,6 +14,6 @@ describe("minima", () => {
 
   test("only consider the numbers in the array", () => {
     expect(minima(2, [5, 'a', 'b', 4])).toEqual([4, 5]);
-    expect(minima(3, ['a', null, undefined, '', 5, 6, 7, 8])).toEqual([5, 6, 7]);
+    expect(minima(3, ['a', null, undefined, '', NaN, 5, 6, 7, 8])).toEqual([5, 6, 7]);
   });
 });
