@@ -1,6 +1,6 @@
 const isNumber = (num) => typeof num === 'number' && !Number.isNaN(num);
 
-function minima(numberOfElementsToReturn, array) {
+function minima(numerOfElements, array) {
   const isValidNumber = isNumber(numberOfElementsToReturn);
 
   if (!isValidNumber) {
