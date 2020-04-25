@@ -15,7 +15,7 @@ function minima(numberOfElementsToReturn, array) {
     throw new TypeError(`expected array , got ${typeof array}`);
   }
 
-  const inputArray = array.filter(element => isNumber(element));
+  const inputArray = array.filter(isNumber);
   inputArray.sort((firstNum, secondNum) => firstNum - secondNum);
 
   const lengthOfInputArray = inputArray.length;
