@@ -1,6 +1,6 @@
 
-const isValidDate = (dateInMillieconds) => {
-  return typeof dateInMillieconds === 'number' && !Number.isNaN(dateInMillieconds);
+const isValidDate = (milliseconds) => {
+  return typeof milliseconds === 'number' && !Number.isNaN(milliseconds);
 };
 
 function timeWas(timeInMilliseconds, currentDateInMilliseconds) {
@@ -12,17 +12,22 @@ function timeWas(timeInMilliseconds, currentDateInMilliseconds) {
     if (!isValidDate(currentDateInMilliseconds)) {
       throw new Error('please enter current date  in milliseconds');
     }
-    Date.now = () => currentDateInMilliseconds;
   }
+  let currentDate;
 
-  const timeInSeconds = Math.floor((Date.now() - timeInMilliseconds) / 1000);
+  if (currentDateInMilliseconds) {
+    currentDate = new Date(currentDateInMilliseconds).getTime();
+  } else {
+    currentDate = Date.now();
+  }
+  const timeInSeconds = Math.floor((currentDate - timeInMilliseconds) / 1000);
 
   if (timeInSeconds <= 1) {
     return 'just now';
   }
 
   // values in seconds
-  const intervals = {
+  const valuesInSeconds = {
     year: 31104000,
     month: 2592000,
     week: 604800,
@@ -32,8 +37,8 @@ function timeWas(timeInMilliseconds, currentDateInMilliseconds) {
     second: 1
   };
 
-  for (const interval of Object.getOwnPropertyNames(intervals)) {
-    const counter = Math.floor(timeInSeconds / intervals[interval]);
+  for (const interval of Object.getOwnPropertyNames(valuesInSeconds)) {
+    const counter = Math.floor(timeInSeconds / valuesInSeconds[interval]);
     if (counter > 0) {
       if (counter === 1) {
         return `${counter} ${interval} ago`;
