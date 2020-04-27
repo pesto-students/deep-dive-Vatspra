@@ -13,13 +13,8 @@ function timeWas(timeInMilliseconds, currentDateInMilliseconds) {
       throw new Error('please enter current date  in milliseconds');
     }
   }
-  let currentDate;
-
-  if (currentDateInMilliseconds) {
-    currentDate = new Date(currentDateInMilliseconds).getTime();
-  } else {
-    currentDate = Date.now();
-  }
+  
+  const currentDate = currentDateInMilliseconds ? currentDateInMilliseconds : Date.now();
   const timeInSeconds = Math.floor((currentDate - timeInMilliseconds) / 1000);
 
   if (timeInSeconds <= 1) {
