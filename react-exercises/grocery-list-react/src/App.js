@@ -30,15 +30,15 @@ class App extends React.Component {
   handleSubmit(event) {
     const  groceryList  = this.state.groceryList.slice();
     const newGrocery = this.state.value.trim();
-    let isNewitem = true;
+    let isNewItem = true;
     if (newGrocery) {
       for (const grocery of groceryList) {
         if (grocery.name.toLowerCase() === newGrocery.toLowerCase()) {
           grocery.count = grocery.count + 1;
-          isNewitem = false;
+          isNewItem = false;
         }
       }
-      if (isNewitem) {
+      if (isNewItem) {
         const obj = { name: newGrocery, count: 1 };
         groceryList.push(obj);
       }
