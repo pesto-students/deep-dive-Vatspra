@@ -1,0 +1,44 @@
+.grocery {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 256px;
+  margin: 8px;
+  cursor: pointer;
+}
+
+.grocery:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 16px;
+  display: flex;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+img {
+  height: 256px;
+  width: 100%;
+}
+.icon {
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: 24px;
+  padding: 8px;
+}
+svg {
+  cursor: pointer;
+  color: #e74c3c;
+}
+
+.grocery-name {
+  max-width: 200px;
+  word-break: break-al;
+}
+
+.red {
+  border: 2px solid red;
+}
