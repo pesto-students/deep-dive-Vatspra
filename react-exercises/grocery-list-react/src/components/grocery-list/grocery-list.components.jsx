@@ -4,7 +4,6 @@ import './grocery-list.style.css';
 import {EmptyPlaceHolder} from '../empty-list-placeholder/empty-list-placeholder.component';
 
 export const GroceryList = (props) => {
-  console.log(props)
   return <div>
     {
       props.groceries.length ?

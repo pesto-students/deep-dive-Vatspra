@@ -9,7 +9,7 @@ class App extends React.Component {
     super();
     this.state = {
       value: '',
-      groceries: [
+      groceryList: [
         { name: 'Basmati Rice', count: 1, color: 'black' },
         { name: 'Butter', count: 1, color: 'black' },
         { name: 'Milk', count: 1, color: 'black' },
@@ -19,9 +19,8 @@ class App extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.removeItem = this.removeItem.bind(this);
+    this.clearList = this.clearList.bind(this);
     this.updateColor = this.updateColor.bind(this);
-    // this.removeSingleItem = this.removeSingleItem.bind(this);
   }
 
   handleChange(event) {
@@ -29,71 +28,48 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
-    let { groceries } = this.state;
+    const  groceryList  = this.state.groceryList.slice();
     const newGrocery = this.state.value.trim();
     let isNewitem = true;
     if (newGrocery) {
-      for (const grocery of groceries) {
-        if (grocery.name.toLocaleLowerCase() === newGrocery.toLowerCase()) {
+      for (const grocery of groceryList) {
+        if (grocery.name.toLowerCase() === newGrocery.toLowerCase()) {
           grocery.count = grocery.count + 1;
           isNewitem = false;
         }
       }
       if (isNewitem) {
         const obj = { name: newGrocery, count: 1 };
-        groceries.push(obj);
+        groceryList.push(obj);
       }
-      this.setState({ groceries: groceries });
+      this.setState({ groceryList: groceryList });
     }
     event.preventDefault();
   }
 
-  removeItem() {
-    // if (!item) {
-    this.setState({ groceries: [] });
+  clearList() {
+    this.setState({ groceryList: [] });
     return;
-    // }
-    // this.removeSingleItem(item);
-    // event.preventDefault();
-    // event.stopPropagation();
-    // console.log(event)
   }
-
-  // removeSingleItem(event, item) {
-  //   console.log('hii', item);
-  //   const { groceries } = this.state;
-  //   const updatedGroceries = groceries.filter(grocery => console.log(grocery)
-  //     );
-
-  //   console.log(updatedGroceries);
-  //   // this.setState({ groceries: updatedGroceries });
-
-  // }
 
 
   updateColor(item) {
-    const { groceries } = this.state;
-    const newList = groceries.map(grocery => {
+    const { groceryList } = this.state;
+    const newList = groceryList.map(grocery => {
       if (item.name.toLowerCase() === grocery.name.toLowerCase()) {
-        console.log(item.name, grocery.name);
-        if (grocery.color === 'red') {
-          grocery.color = 'black';
-        } else {
-          grocery.color = 'red';
-        }
+        grocery.color === 'red' ? grocery.color = 'black' : grocery.color = 'red';
       }
       return grocery;
     });
-    this.setState({ groceries: newList });
+    this.setState({ groceryList: newList });
   }
 
   render() {
-    // const {gr}
     return (
       <div>
         <AddGroceryForm handleChange={this.handleChange} handleSubmit={this.handleSubmit}
         />
-        <GroceryList groceries={this.state.groceries} onDelete={this.removeItem} updateColor={this.updateColor} />
+        <GroceryList groceries={this.state.groceryList} onDelete={this.clearList} updateColor={this.updateColor} />
       </div>
     );
   }
